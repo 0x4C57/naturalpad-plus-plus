@@ -226,8 +226,8 @@ INT_PTR CALLBACK WordStyleDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM l
 							NppParameters& nppParamInst = NppParameters::getInstance();
 							if (_restoreInvalid)
 							{
-								generic_string str( nppParamInst.getNppGUI()._themeName );
-								nppParamInst.reloadStylers( &str[0] );
+								generic_string str(nppParamInst.getNppGUI()._themeName);
+								nppParamInst.reloadStylers(str.c_str());
 							}
 
 							LexerStylerArray & lsArray = nppParamInst.getLStylerArray();
@@ -278,7 +278,10 @@ INT_PTR CALLBACK WordStyleDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM l
 							_isDirty = false;
 						}
 						_isThemeDirty = false;
-						(NppParameters::getInstance()).writeStyles(_lsArray, _globalStyles);
+						auto newSavedFilePath = (NppParameters::getInstance()).writeStyles(_lsArray, _globalStyles);
+						if (!newSavedFilePath.empty())
+							updateThemeName(newSavedFilePath);
+
 						::EnableWindow(::GetDlgItem(_hSelf, IDC_SAVECLOSE_BUTTON), FALSE);
 						//_isSync = true;
 						display(false);
@@ -395,11 +398,7 @@ INT_PTR CALLBACK WordStyleDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM l
 										break;
 
 									case IDC_SWITCH2THEME_COMBO :
-										switchToTheme();
-										setVisualFromStyleList();
-										notifyDataModified();
-										_isThemeDirty = false;
-										apply();
+										applyCurrentSelectedThemeAndUpdateUI();
 										break;
 								}
 								return TRUE;
@@ -646,11 +645,33 @@ void WordStyleDlg::switchToTheme()
 		if ( mb_response == IDYES )
 			(NppParameters::getInstance()).writeStyles(_lsArray, _globalStyles);
 	}
-	nppParamInst.reloadStylers(&_themeName[0]);
+	nppParamInst.reloadStylers(_themeName.c_str());
 
 	loadLangListFromNppParam();
 	_restoreInvalid = true;
 
+}
+
+void WordStyleDlg::applyCurrentSelectedThemeAndUpdateUI()
+{
+	switchToTheme();
+	setVisualFromStyleList();
+	notifyDataModified();
+	_isThemeDirty = false;
+	apply();
+}
+
+bool WordStyleDlg::selectThemeByName(const TCHAR* themeName)
+{
+	LRESULT iTheme = ::SendMessage(_hSwitch2ThemeCombo, CB_FINDSTRING, 1, reinterpret_cast<LPARAM>(themeName));
+	if (iTheme == CB_ERR)
+		return false;
+
+	::SendMessage(_hSwitch2ThemeCombo, CB_SETCURSEL, iTheme, 0);
+
+	applyCurrentSelectedThemeAndUpdateUI();
+
+	return true;
 }
 
 void WordStyleDlg::setStyleListFromLexer(int index)
@@ -750,6 +771,15 @@ void WordStyleDlg::setVisualFromStyleList()
 		_pFgColour->setColour(style._fgColor);
 		_pFgColour->setEnabled((style._colorStyle & COLORSTYLE_FOREGROUND) != 0);
 		isEnable = true;
+	}
+
+	// Selected text colour style
+	if (style._styleDesc && lstrcmp(style._styleDesc, TEXT("Selected text colour")) == 0)
+	{
+		isEnable = false; // disable by default for "Selected text colour" style
+
+		if (NppParameters::getInstance().isSelectFgColorEnabled())
+			isEnable = true;
 	}
 	enableFg(isEnable);
 

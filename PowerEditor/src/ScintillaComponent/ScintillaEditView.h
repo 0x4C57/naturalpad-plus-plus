@@ -65,6 +65,8 @@ typedef void * SCINTILLA_PTR;
 #define WM_FRSAVE_INT               (SCINTILLA_USER + 12)
 #define WM_FRSAVE_STR               (SCINTILLA_USER + 13)
 #define WM_FINDALL_INCURRENTFINDER  (SCINTILLA_USER + 14)
+#define WM_FINDINPROJECTS           (SCINTILLA_USER + 15)
+#define WM_REPLACEINPROJECTS        (SCINTILLA_USER + 16)
 
 const int NB_FOLDER_STATE = 7;
 
@@ -191,9 +193,9 @@ public:
 	{
 		--_refCount;
 
-		if ((!_refCount)&&(_hLib))
+		if ((!_refCount)&&(_SciInit))
 		{
-			::FreeLibrary(_hLib);
+			Scintilla_ReleaseResources();
 
 			for (BufferStyleMap::iterator it(_hotspotStyles.begin()); it != _hotspotStyles.end(); ++it )
 			{
@@ -427,6 +429,8 @@ public:
 		return long(execute(SCI_TEXTHEIGHT));
 	};
 
+	int getTextZoneWidth() const;
+
 	void gotoLine(int line){
 		if (line < execute(SCI_GETLINECOUNT))
 			execute(SCI_GOTOLINE,line);
@@ -612,7 +616,8 @@ public:
 	void removeAnyDuplicateLines();
 
 protected:
-	static HINSTANCE _hLib;
+	static bool _SciInit;
+
 	static int _refCount;
 
     static UserDefineDialog _userDefineDlg;
@@ -915,7 +920,7 @@ protected:
 	};
 
 	void setNimrodLexer() {
-		setLexer(SCLEX_NIMROD, L_NIMROD, LIST_0);
+		setLexer(SCLEX_NIMROD, L_NIM, LIST_0);
 	};
 
 	void setNncrontabLexer() {

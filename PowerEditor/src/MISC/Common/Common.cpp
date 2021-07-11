@@ -616,21 +616,21 @@ generic_string PathAppend(generic_string& strDest, const generic_string& str2app
 		return strDest;
 	}
 
-	if (strDest.empty() && not str2append.empty()) // "" + titi
+	if (strDest.empty() && !str2append.empty()) // "" + titi
 	{
 		strDest = str2append;
 		return strDest;
 	}
 
-	if (strDest[strDest.length() - 1] == '\\' && (not str2append.empty() && str2append[0] == '\\')) // toto\ + \titi
+	if (strDest[strDest.length() - 1] == '\\' && (!str2append.empty() && str2append[0] == '\\')) // toto\ + \titi
 	{
 		strDest.erase(strDest.length() - 1, 1);
 		strDest += str2append;
 		return strDest;
 	}
 
-	if ((strDest[strDest.length() - 1] == '\\' && (not str2append.empty() && str2append[0] != '\\')) // toto\ + titi
-		|| (strDest[strDest.length() - 1] != '\\' && (not str2append.empty() && str2append[0] == '\\'))) // toto + \titi
+	if ((strDest[strDest.length() - 1] == '\\' && (!str2append.empty() && str2append[0] != '\\')) // toto\ + titi
+		|| (strDest[strDest.length() - 1] != '\\' && (!str2append.empty() && str2append[0] == '\\'))) // toto + \titi
 	{
 		strDest += str2append;
 		return strDest;
@@ -945,7 +945,7 @@ bool allPatternsAreExclusion(const std::vector<generic_string> patterns)
 			break;
 		}
 	}
-	return not oneInclusionPatternFound;
+	return !oneInclusionPatternFound;
 }
 
 generic_string GetLastErrorAsString(DWORD errorCode)
@@ -997,6 +997,8 @@ HWND CreateToolTip(int toolID, HWND hDlg, HINSTANCE hInst, const PTSTR pszText)
 		return NULL;
 	}
 
+	NppDarkMode::setDarkTooltips(hwndTip, NppDarkMode::ToolTipsType::tooltip);
+
 	// Associate the tooltip with the tool.
 	TOOLINFO toolInfo = { 0 };
 	toolInfo.cbSize = sizeof(toolInfo);
@@ -1004,6 +1006,48 @@ HWND CreateToolTip(int toolID, HWND hDlg, HINSTANCE hInst, const PTSTR pszText)
 	toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
 	toolInfo.uId = (UINT_PTR)hwndTool;
 	toolInfo.lpszText = pszText;
+	if (!SendMessage(hwndTip, TTM_ADDTOOL, 0, (LPARAM)&toolInfo))
+	{
+		DestroyWindow(hwndTip);
+		return NULL;
+	}
+
+	SendMessage(hwndTip, TTM_ACTIVATE, TRUE, 0);
+	SendMessage(hwndTip, TTM_SETMAXTIPWIDTH, 0, 200);
+	// Make tip stay 15 seconds
+	SendMessage(hwndTip, TTM_SETDELAYTIME, TTDT_AUTOPOP, MAKELPARAM((15000), (0)));
+
+	return hwndTip;
+}
+
+HWND CreateToolTipRect(int toolID, HWND hWnd, HINSTANCE hInst, const PTSTR pszText, const RECT rc)
+{
+	if (!toolID || !hWnd || !pszText)
+	{
+		return NULL;
+	}
+
+	// Create the tooltip. g_hInst is the global instance handle.
+	HWND hwndTip = CreateWindowEx(0, TOOLTIPS_CLASS, NULL,
+		WS_POPUP | TTS_ALWAYSTIP | TTS_BALLOON,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		hWnd, NULL,
+		hInst, NULL);
+
+	if (!hwndTip)
+	{
+		return NULL;
+	}
+
+	// Associate the tooltip with the tool.
+	TOOLINFO toolInfo = { 0 };
+	toolInfo.cbSize = sizeof(toolInfo);
+	toolInfo.hwnd = hWnd;
+	toolInfo.uFlags = TTF_SUBCLASS;
+	toolInfo.uId = toolID;
+	toolInfo.lpszText = pszText;
+	toolInfo.rect = rc;
 	if (!SendMessage(hwndTip, TTM_ADDTOOL, 0, (LPARAM)&toolInfo))
 	{
 		DestroyWindow(hwndTip);
@@ -1087,7 +1131,7 @@ bool isCertificateValidated(const generic_string & fullFilePath, const generic_s
 		CertInfo.SerialNumber = pSignerInfo->SerialNumber;
 
 		pCertContext = CertFindCertificateInStore(hStore, X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, 0, CERT_FIND_SUBJECT_CERT, (PVOID)&CertInfo, NULL);
-		if (not pCertContext)
+		if (!pCertContext)
 		{
 			generic_string errorMessage = TEXT("Certificate context: ");
 			errorMessage += GetLastErrorAsString(GetLastError());

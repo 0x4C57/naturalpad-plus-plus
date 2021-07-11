@@ -220,14 +220,14 @@ bool Buffer::checkFileState() // returns true if the status has been changed (it
 	bool isWow64Off = false;
 	NppParameters& nppParam = NppParameters::getInstance();
 
-	if (not PathFileExists(_fullPathName.c_str()))
+	if (!PathFileExists(_fullPathName.c_str()))
 	{
 		nppParam.safeWow64EnableWow64FsRedirection(FALSE);
 		isWow64Off = true;
 	}
 
 	bool isOK = false;
-	if (_currentStatus != DOC_DELETED && not PathFileExists(_fullPathName.c_str()))	//document has been deleted
+	if (_currentStatus != DOC_DELETED && !PathFileExists(_fullPathName.c_str()))	//document has been deleted
 	{
 		_currentStatus = DOC_DELETED;
 		_isFileReadOnly = false;
@@ -585,7 +585,7 @@ void FileManager::closeBuffer(BufferID id, ScintillaEditView * identifier)
 BufferID FileManager::loadFile(const TCHAR * filename, Document doc, int encoding, const TCHAR *backupFileName, FILETIME fileNameTimestamp)
 {
 	bool ownDoc = false;
-	if (doc == NULL)
+	if (!doc)
 	{
 		doc = (Document)_pscratchTilla->execute(SCI_CREATEDOCUMENT);
 		ownDoc = true;
@@ -917,7 +917,7 @@ bool FileManager::backupCurrentBuffer()
 	else // buffer not dirty, sync: delete the backup file
 	{
 		generic_string backupFilePath = buffer->getBackupFileName();
-		if (not backupFilePath.empty())
+		if (!backupFilePath.empty())
 		{
 			// delete backup file
 			generic_string file2Delete = buffer->getBackupFileName();
@@ -945,7 +945,7 @@ bool FileManager::deleteBufferBackup(BufferID id)
 	Buffer* buffer = getBufferByID(id);
 	bool result = true;
 	generic_string backupFilePath = buffer->getBackupFileName();
-	if (not backupFilePath.empty())
+	if (!backupFilePath.empty())
 	{
 		// delete backup file
 		buffer->setBackupFileName(generic_string());
@@ -1062,7 +1062,7 @@ SavingStatus FileManager::saveBuffer(BufferID id, const TCHAR * filename, bool i
 		_pscratchTilla->execute(SCI_SETDOCPOINTER, 0, _scratchDocDefault);
 
 		generic_string backupFilePath = buffer->getBackupFileName();
-		if (not backupFilePath.empty())
+		if (!backupFilePath.empty())
 		{
 			// delete backup file
 			buffer->setBackupFileName(generic_string());
@@ -1084,7 +1084,8 @@ size_t FileManager::nextUntitledNewNumber() const
 			// if untitled document is invisible, then don't put its number into array (so its number is available to be used)
 			if ((buf->_referees[0])->isVisible())
 			{
-				TCHAR *numberStr = buf->_fileName + lstrlen(UNTITLED_STR);
+				generic_string newTitle = ((NppParameters::getInstance()).getNativeLangSpeaker())->getLocalizedStrFromID("tab-untitled-string", UNTITLED_STR);
+				TCHAR *numberStr = buf->_fileName + newTitle.length();
 				int usedNumber = generic_atoi(numberStr);
 				usedNumbers.push_back(usedNumber);
 			}
@@ -1120,7 +1121,8 @@ size_t FileManager::nextUntitledNewNumber() const
 
 BufferID FileManager::newEmptyDocument()
 {
-	generic_string newTitle = UNTITLED_STR;
+	generic_string newTitle = ((NppParameters::getInstance()).getNativeLangSpeaker())->getLocalizedStrFromID("tab-untitled-string", UNTITLED_STR);
+
 	TCHAR nb[10];
 	wsprintf(nb, TEXT("%d"), nextUntitledNewNumber());
 	newTitle += nb;
@@ -1137,7 +1139,7 @@ BufferID FileManager::newEmptyDocument()
 
 BufferID FileManager::bufferFromDocument(Document doc, bool dontIncrease, bool dontRef)
 {
-	generic_string newTitle = UNTITLED_STR;
+	generic_string newTitle = ((NppParameters::getInstance()).getNativeLangSpeaker())->getLocalizedStrFromID("tab-untitled-string", UNTITLED_STR);
 	TCHAR nb[10];
 	wsprintf(nb, TEXT("%d"), nextUntitledNewNumber());
 	newTitle += nb;
@@ -1260,7 +1262,7 @@ LangType FileManager::detectLanguageFromTextBegining(const unsigned char *data, 
 bool FileManager::loadFileData(Document doc, const TCHAR * filename, char* data, Utf8_16_Read * unicodeConvertor, LoadedFileFormat& fileFormat)
 {
 	FILE *fp = generic_fopen(filename, TEXT("rb"));
-	if (not fp)
+	if (!fp)
 		return false;
 
 	//Get file size
@@ -1501,8 +1503,9 @@ int FileManager::getFileNameFromBuffer(BufferID id, TCHAR * fn2copy)
 
 int FileManager::docLength(Buffer* buffer) const
 {
+	Document curDoc = _pscratchTilla->execute(SCI_GETDOCPOINTER);
 	_pscratchTilla->execute(SCI_SETDOCPOINTER, 0, buffer->_doc);
 	int docLen = _pscratchTilla->getCurrentDocLen();
-	_pscratchTilla->execute(SCI_SETDOCPOINTER, 0, _scratchDocDefault);
+	_pscratchTilla->execute(SCI_SETDOCPOINTER, 0, curDoc);
 	return docLen;
 }

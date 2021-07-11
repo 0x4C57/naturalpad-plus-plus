@@ -86,7 +86,7 @@ bool DocumentMap::needToRecomputeWith(const ScintillaEditView *editView)
 	if (_displayZoom != currentZoom)
 		return true;
 
-	int currentTextZoneWidth = getEditorTextZoneWidth(editView);
+	int currentTextZoneWidth = pEditView->getTextZoneWidth();
 	if (_displayWidth != currentTextZoneWidth)
 		return true;
 
@@ -163,7 +163,7 @@ void DocumentMap::wrapMap(const ScintillaEditView *editView)
 	if (pEditView->isWrap())
 	{
 		// get current scintilla width W1
-		int editZoneWidth = getEditorTextZoneWidth(editView);
+		int editZoneWidth = pEditView->getTextZoneWidth();
 
 		// update the wrap needed data
 		_displayWidth = editZoneWidth;
@@ -179,23 +179,18 @@ void DocumentMap::wrapMap(const ScintillaEditView *editView)
 		// sync wrapping indent mode
 		_pMapView->execute(SCI_SETWRAPINDENTMODE, pEditView->execute(SCI_GETWRAPINDENTMODE));
 
+		const ScintillaViewParams& svp = NppParameters::getInstance().getSVP();
+
+		if (svp._paddingLeft || svp._paddingRight)
+		{
+			int paddingMapLeft = static_cast<int>(svp._paddingLeft / (editZoneWidth / docMapWidth));
+			int paddingMapRight = static_cast<int>(svp._paddingRight / (editZoneWidth / docMapWidth));
+			_pMapView->execute(SCI_SETMARGINLEFT, 0, paddingMapLeft);
+			_pMapView->execute(SCI_SETMARGINRIGHT, 0, paddingMapRight);
+		}
 	}
+
 	doMove();
-}
-
-int DocumentMap::getEditorTextZoneWidth(const ScintillaEditView *editView)
-{
-	const ScintillaEditView *pEditView = editView ? editView : *_ppEditView;
-
-	RECT editorRect;
-	pEditView->getClientRect(editorRect);
-
-	int marginWidths = 0;
-	for (int m = 0; m < 4; ++m)
-	{
-		marginWidths += static_cast<int32_t>(pEditView->execute(SCI_GETMARGINWIDTHN, m));
-	}
-	return editorRect.right - editorRect.left - marginWidths;
 }
 
 void DocumentMap::scrollMap()
@@ -220,7 +215,7 @@ void DocumentMap::scrollMap()
 		// Get bottom position of orange marker window
 		LRESULT lowerY = 0;
 		LRESULT lineHeightMapView  = _pMapView->execute(SCI_TEXTHEIGHT, 0);
-		if (not (*_ppEditView)->isWrap())
+		if (!(*_ppEditView)->isWrap())
 		{ // not wrapped: mimic height of edit view
 			LRESULT lineHeightEditView = (*_ppEditView)->execute(SCI_TEXTHEIGHT, 0);
 			lowerY = higherY + lineHeightMapView * (rcEditView.bottom - rcEditView.top) / lineHeightEditView;
@@ -261,7 +256,7 @@ void DocumentMap::scrollMapWith(const MapPosition & mapPos)
 		// Get the editor's higher/lower Y, then compute the map's higher/lower Y
 		LRESULT higherY = 0;
 		LRESULT lowerY = 0;
-		if (not mapPos._isWrap)
+		if (!mapPos._isWrap)
 		{
 			auto higherPos = _pMapView->execute(SCI_POSITIONFROMLINE, mapPos._firstVisibleDocLine);
 			auto lowerPos = _pMapView->execute(SCI_POSITIONFROMLINE, mapPos._lastVisibleDocLine);

@@ -135,6 +135,7 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_NULL,    IDM_EDIT_SORTLINES_DECIMALCOMMA_DESCENDING,   false, false, false, nullptr },
 	{ VK_NULL,    IDM_EDIT_SORTLINES_DECIMALDOT_ASCENDING,      false, false, false, nullptr },
 	{ VK_NULL,    IDM_EDIT_SORTLINES_DECIMALDOT_DESCENDING,     false, false, false, nullptr },
+	{ VK_NULL,    IDM_EDIT_SORTLINES_REVERSE_ORDER,             false, false, false, nullptr },
 	{ VK_NULL,    IDM_EDIT_SORTLINES_RANDOMLY,                  false, false, false, nullptr },
 	{ VK_Q,       IDM_EDIT_BLOCK_COMMENT,                       true,  false, false, nullptr },
 	{ VK_K,       IDM_EDIT_BLOCK_COMMENT_SET,                   true,  false, false, nullptr },
@@ -188,11 +189,16 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_B,       IDM_SEARCH_GOTOMATCHINGBRACE,                 true,  false, false, nullptr },
 	{ VK_B,       IDM_SEARCH_SELECTMATCHINGBRACES,              true,  true,  false, nullptr },
 	{ VK_M,       IDM_SEARCH_MARK,                              true,  false, false, nullptr },
-	{ VK_NULL,    IDM_SEARCH_MARKALLEXT1,                       false, false, false, TEXT("Mark search results using 1st style") },
-	{ VK_NULL,    IDM_SEARCH_MARKALLEXT2,                       false, false, false, TEXT("Mark search results using 2nd style") },
-	{ VK_NULL,    IDM_SEARCH_MARKALLEXT3,                       false, false, false, TEXT("Mark search results using 3rd style") },
-	{ VK_NULL,    IDM_SEARCH_MARKALLEXT4,                       false, false, false, TEXT("Mark search results using 4th style") },
-	{ VK_NULL,    IDM_SEARCH_MARKALLEXT5,                       false, false, false, TEXT("Mark search results using 5th style") },
+	{ VK_NULL,    IDM_SEARCH_MARKALLEXT1,                       false, false, false, TEXT("Mark all using 1st style") },
+	{ VK_NULL,    IDM_SEARCH_MARKALLEXT2,                       false, false, false, TEXT("Mark all using 2nd style") },
+	{ VK_NULL,    IDM_SEARCH_MARKALLEXT3,                       false, false, false, TEXT("Mark all using 3rd style") },
+	{ VK_NULL,    IDM_SEARCH_MARKALLEXT4,                       false, false, false, TEXT("Mark all using 4th style") },
+	{ VK_NULL,    IDM_SEARCH_MARKALLEXT5,                       false, false, false, TEXT("Mark all using 5th style") },
+	{ VK_NULL,    IDM_SEARCH_MARKONEEXT1,                       false, false, false, TEXT("Mark one using 1st style") },
+	{ VK_NULL,    IDM_SEARCH_MARKONEEXT2,                       false, false, false, TEXT("Mark one using 2nd style") },
+	{ VK_NULL,    IDM_SEARCH_MARKONEEXT3,                       false, false, false, TEXT("Mark one using 3rd style") },
+	{ VK_NULL,    IDM_SEARCH_MARKONEEXT4,                       false, false, false, TEXT("Mark one using 4th style") },
+	{ VK_NULL,    IDM_SEARCH_MARKONEEXT5,                       false, false, false, TEXT("Mark one using 5th style") },
 	{ VK_NULL,    IDM_SEARCH_UNMARKALLEXT1,                     false, false, false, TEXT("Clear marks using 1st style") },
 	{ VK_NULL,    IDM_SEARCH_UNMARKALLEXT2,                     false, false, false, TEXT("Clear marks using 2nd style") },
 	{ VK_NULL,    IDM_SEARCH_UNMARKALLEXT3,                     false, false, false, TEXT("Clear marks using 3rd style") },
@@ -233,6 +239,7 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_NULL,    IDM_VIEW_ALWAYSONTOP,                         false, false, false, nullptr },
 	{ VK_F11,     IDM_VIEW_FULLSCREENTOGGLE,                    false, false, false, nullptr },
 	{ VK_F12,     IDM_VIEW_POSTIT,                              false, false, false, nullptr },
+	{ VK_NULL,    IDM_VIEW_DISTRACTIONFREE,                     false, false, false, nullptr },
 
 	{ VK_NULL,    IDM_VIEW_IN_FIREFOX,                          false, false, false, TEXT("View current file in Firefox") },
 	{ VK_NULL,    IDM_VIEW_IN_CHROME,                           false, false, false, TEXT("View current file in Chrome") },
@@ -313,8 +320,8 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_NULL,    IDM_FORMAT_ANSI,                              false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORMAT_AS_UTF_8,                          false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORMAT_UTF_8,                             false, false, false, nullptr },
-	{ VK_NULL,    IDM_FORMAT_UCS_2BE,                           false, false, false, nullptr },
-	{ VK_NULL,    IDM_FORMAT_UCS_2LE,                           false, false, false, nullptr },
+	{ VK_NULL,    IDM_FORMAT_UTF_16BE,                          false, false, false, nullptr },
+	{ VK_NULL,    IDM_FORMAT_UTF_16LE,                          false, false, false, nullptr },
 
 	{ VK_NULL,    IDM_FORMAT_ISO_8859_6,                        false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORMAT_WIN_1256,                          false, false, false, nullptr },
@@ -367,8 +374,8 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_NULL,    IDM_FORMAT_CONV2_ANSI,                        false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORMAT_CONV2_AS_UTF_8,                    false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORMAT_CONV2_UTF_8,                       false, false, false, nullptr },
-	{ VK_NULL,    IDM_FORMAT_CONV2_UCS_2BE,                     false, false, false, nullptr },
-	{ VK_NULL,    IDM_FORMAT_CONV2_UCS_2LE,                     false, false, false, nullptr },
+	{ VK_NULL,    IDM_FORMAT_CONV2_UTF_16BE,                    false, false, false, nullptr },
+	{ VK_NULL,    IDM_FORMAT_CONV2_UTF_16LE,                    false, false, false, nullptr },
 
 	{ VK_NULL,    IDM_LANG_USER_DLG,                            false, false, false, nullptr },
 	{ VK_NULL,    IDM_LANG_USER,                                false, false, false, nullptr },
@@ -395,7 +402,7 @@ static const WinMenuKeyDefinition winKeyDefs[] =
 	{ VK_NULL,    IDM_PROJECTPAGE,                              false, false, false, nullptr },
 //  { VK_NULL,    IDM_ONLINEDOCUMENT,                               false, false, false, nullptr },
 	{ VK_NULL,    IDM_FORUM,                                    false, false, false, nullptr },
-	{ VK_NULL,    IDM_ONLINESUPPORT,                            false, false, false, nullptr },
+//	{ VK_NULL,    IDM_ONLINESUPPORT,                            false, false, false, nullptr },
 //	{ VK_NULL,    IDM_PLUGINSHOME,                              false, false, false, nullptr },
 
 	// The following two commands are not in menu if (nppGUI._doesExistUpdater == 0).
@@ -709,7 +716,7 @@ bool LocalizationSwitcher::addLanguageFromXml(const std::wstring& xmlFullPath)
 {
 	wchar_t * fn = ::PathFindFileNameW(xmlFullPath.c_str());
 	wstring foundLang = getLangFromXmlFileName(fn);
-	if (not foundLang.empty())
+	if (!foundLang.empty())
 	{
 		_localizationList.push_back(pair<wstring, wstring>(foundLang, xmlFullPath));
 		return true;
@@ -889,7 +896,7 @@ NppParameters::~NppParameters()
 }
 
 
-bool NppParameters::reloadStylers(TCHAR* stylePath)
+bool NppParameters::reloadStylers(const TCHAR* stylePath)
 {
 	delete _pXmlUserStylerDoc;
 
@@ -1311,7 +1318,7 @@ bool NppParameters::load()
 	// LocalizationSwitcher should use always user path
 	_localizationSwitcher._nativeLangPath = nativeLangPath;
 
-	if (not _startWithLocFileName.empty()) // localization argument detected, use user wished localization
+	if (!_startWithLocFileName.empty()) // localization argument detected, use user wished localization
 	{
 		// overwrite nativeLangPath variable
 		nativeLangPath = _nppPath;
@@ -1434,18 +1441,17 @@ bool NppParameters::load()
 				delete _pXmlExternalLexerDoc[i];
 	}
 
-	//------------------------------//
-	// blacklist.xml : for per user //
-	//------------------------------//
-	_blacklistPath = _userPath;
-	PathAppend(_blacklistPath, TEXT("blacklist.xml"));
+	//-------------------------------------------------------------//
+	// enableSelectFgColor.xml : for per user                      //
+	// This empty xmj file is optional - user adds this empty file //
+	// manually in order to set selected text's foreground color.  //
+	//-------------------------------------------------------------//
+	generic_string enableSelectFgColorPath = _userPath;
+	PathAppend(enableSelectFgColorPath, TEXT("enableSelectFgColor.xml"));
 
-	if (PathFileExists(_blacklistPath.c_str()))
+	if (PathFileExists(enableSelectFgColorPath.c_str()))
 	{
-		_pXmlBlacklistDoc = new TiXmlDocument(_blacklistPath);
-		loadOkay = _pXmlBlacklistDoc->LoadFile();
-		if (loadOkay)
-			getBlackListFromXmlTree();
+		_isSelectFgColorEnabled = true;
 	}
 	return isAllLaoded;
 }
@@ -1640,6 +1646,17 @@ bool NppParameters::isInFontList(const generic_string& fontName2Search) const
 	return false;
 }
 
+HFONT NppParameters::getDefaultUIFont()
+{
+	static HFONT g_defaultMessageFont = []() {
+		NONCLIENTMETRICS ncm = { sizeof(ncm) };
+		SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(ncm), &ncm, 0);
+
+		return CreateFontIndirect(&ncm.lfMessageFont);
+	}();
+	return g_defaultMessageFont;
+}
+
 void NppParameters::getLangKeywordsFromXmlTree()
 {
 	TiXmlNode *root =
@@ -1681,7 +1698,7 @@ bool NppParameters::getUserParametersFromXmlTree()
 		return false;
 
 	TiXmlNode *root = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not root)
+	if (!root)
 		return false;
 
 	// Get GUI parameters
@@ -1980,7 +1997,7 @@ bool NppParameters::getContextMenuFromXmlTree(HMENU mainMenuHadle, HMENU plugins
 				menuEntryName = menuEntryNameA?wmc.char2wchar(menuEntryNameA, SC_CP_UTF8):TEXT("");
 				menuItemName = menuItemNameA?wmc.char2wchar(menuItemNameA, SC_CP_UTF8):TEXT("");
 
-				if (not menuEntryName.empty() and not menuItemName.empty())
+				if (!menuEntryName.empty() && !menuItemName.empty())
 				{
 					int cmd = getCmdIdFromMenuEntryItemName(mainMenuHadle, menuEntryName, menuItemName);
 					if (cmd != -1)
@@ -1997,7 +2014,7 @@ bool NppParameters::getContextMenuFromXmlTree(HMENU mainMenuHadle, HMENU plugins
 					pluginCmdName = pluginCmdNameA?wmc.char2wchar(pluginCmdNameA, SC_CP_UTF8):TEXT("");
 
 					// if plugin menu existing plls the value of PluginEntryName and PluginCommandItemName are valid
-					if (pluginsMenu && not pluginName.empty() && not pluginCmdName.empty())
+					if (pluginsMenu && !pluginName.empty() && !pluginCmdName.empty())
 					{
 						int pluginCmdId = getPluginCmdIdFromMenuEntryItemName(pluginsMenu, pluginName, pluginCmdName);
 						if (pluginCmdId != -1)
@@ -2385,6 +2402,18 @@ void NppParameters::feedFindHistoryParameters(TiXmlNode *node)
 	boolStr = (findHistoryRoot->ToElement())->Attribute(TEXT("fifInHiddenFolder"));
 	if (boolStr)
 		_findHistory._isFifInHiddenFolder = (lstrcmp(TEXT("yes"), boolStr) == 0);
+
+	boolStr = (findHistoryRoot->ToElement())->Attribute(TEXT("fifProjectPanel1"));
+	if (boolStr)
+		_findHistory._isFifProjectPanel_1 = (lstrcmp(TEXT("yes"), boolStr) == 0);
+
+	boolStr = (findHistoryRoot->ToElement())->Attribute(TEXT("fifProjectPanel2"));
+	if (boolStr)
+		_findHistory._isFifProjectPanel_2 = (lstrcmp(TEXT("yes"), boolStr) == 0);
+
+	boolStr = (findHistoryRoot->ToElement())->Attribute(TEXT("fifProjectPanel3"));
+	if (boolStr)
+		_findHistory._isFifProjectPanel_3 = (lstrcmp(TEXT("yes"), boolStr) == 0);
 
 	boolStr = (findHistoryRoot->ToElement())->Attribute(TEXT("fifFilterFollowsDoc"));
 	if (boolStr)
@@ -3247,9 +3276,9 @@ void NppParameters::writeSession(const Session & session, const TCHAR *fileName)
 
 void NppParameters::writeShortcuts()
 {
-	if (not _isAnyShortcutModified) return;
+	if (!_isAnyShortcutModified) return;
 
-	if (not _pXmlShortcutDoc)
+	if (!_pXmlShortcutDoc)
 	{
 		//do the treatment
 		_pXmlShortcutDoc = new TiXmlDocument(_shortcutsPath);
@@ -3689,16 +3718,16 @@ void StyleArray::addStyler(int styleID, TiXmlNode *styleNode)
 
 bool NppParameters::writeRecentFileHistorySettings(int nbMaxFile) const
 {
-	if (not _pXmlUserDoc) return false;
+	if (!_pXmlUserDoc) return false;
 
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
 
 	TiXmlNode *historyNode = nppRoot->FirstChildElement(TEXT("History"));
-	if (not historyNode)
+	if (!historyNode)
 	{
 		historyNode = nppRoot->InsertEndChild(TiXmlElement(TEXT("History")));
 	}
@@ -3714,7 +3743,7 @@ bool NppParameters::writeProjectPanelsSettings() const
 	if (!_pXmlUserDoc) return false;
 
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
@@ -3749,7 +3778,7 @@ bool NppParameters::writeFileBrowserSettings(const vector<generic_string> & root
 	if (!_pXmlUserDoc) return false;
 
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
@@ -3787,13 +3816,13 @@ bool NppParameters::writeFileBrowserSettings(const vector<generic_string> & root
 bool NppParameters::writeHistory(const TCHAR *fullpath)
 {
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
 
 	TiXmlNode *historyNode = nppRoot->FirstChildElement(TEXT("History"));
-	if (not historyNode)
+	if (!historyNode)
 	{
 		historyNode = nppRoot->InsertEndChild(TiXmlElement(TEXT("History")));
 	}
@@ -4123,7 +4152,11 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 						_nppGUI._toolBarStatus = TB_SMALL;
 					else if (!lstrcmp(val, TEXT("large")))
 						_nppGUI._toolBarStatus = TB_LARGE;
-					else// if (!lstrcmp(val, TEXT("standard")))	//assume standard in all other cases
+					else if (!lstrcmp(val, TEXT("small2")))
+						_nppGUI._toolBarStatus = TB_SMALL2;
+					else if (!lstrcmp(val, TEXT("large2")))
+						_nppGUI._toolBarStatus = TB_LARGE2;
+					else //if (!lstrcmp(val, TEXT("standard")))
 						_nppGUI._toolBarStatus = TB_STANDARD;
 				}
 			}
@@ -4357,6 +4390,21 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 				}
 			}
 		}
+		else if (!lstrcmp(nm, TEXT("SaveAllConfirm")))
+		{
+			TiXmlNode *n = childNode->FirstChild();
+			if (n)
+			{
+				const TCHAR* val = n->Value();
+				if (val)
+				{
+					if (lstrcmp(val, TEXT("yes")) == 0)
+						_nppGUI._saveAllConfirm = true;
+					else
+						_nppGUI._saveAllConfirm = false;
+				}
+			}
+		}
 		else if (lstrcmp(nm, TEXT("MaitainIndent")) == 0)
 		{
 			TiXmlNode *n = childNode->FirstChild();
@@ -4370,6 +4418,27 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 					else
 						_nppGUI._maitainIndent = false;
 				}
+			}
+		}
+		// <GUIConfig name="MarkAll" matchCase="yes" wholeWordOnly="yes" </GUIConfig>
+		else if (!lstrcmp(nm, TEXT("MarkAll")))
+		{
+			const TCHAR* val = element->Attribute(TEXT("matchCase"));
+			if (val)
+			{
+				if (lstrcmp(val, TEXT("yes")) == 0)
+					_nppGUI._markAllCaseSensitive = true;
+				else if (!lstrcmp(val, TEXT("no")))
+					_nppGUI._markAllCaseSensitive = false;
+			}
+
+			val = element->Attribute(TEXT("wholeWordOnly"));
+			if (val)
+			{
+				if (lstrcmp(val, TEXT("yes")) == 0)
+					_nppGUI._markAllWordOnly = true;
+				else if (!lstrcmp(val, TEXT("no")))
+					_nppGUI._markAllWordOnly = false;
 			}
 		}
 		// <GUIConfig name="SmartHighLight" matchCase="yes" wholeWordOnly="yes" useFindSettings="no">yes</GUIConfig>
@@ -4669,6 +4738,11 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 			if (val)
 			{
 				_nppGUI._finderLinesAreCurrentlyWrapped = (!lstrcmp(val, TEXT("yes")));
+			}
+			val = element->Attribute(TEXT("purgeBeforeEverySearch"));
+			if (val)
+			{
+				_nppGUI._finderPurgeBeforeEverySearch = (!lstrcmp(val, TEXT("yes")));
 			}
 		}
 
@@ -5250,6 +5324,10 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 			const TCHAR* optConfirmReplaceOpenDocs = element->Attribute(TEXT("confirmReplaceInAllOpenDocs"));
 			if (optConfirmReplaceOpenDocs)
 				_nppGUI._confirmReplaceInAllOpenDocs = (lstrcmp(optConfirmReplaceOpenDocs, TEXT("yes")) == 0);
+
+			const TCHAR* optReplaceStopsWithoutFindingNext = element->Attribute(TEXT("replaceStopsWithoutFindingNext"));
+			if (optReplaceStopsWithoutFindingNext)
+				_nppGUI._replaceStopsWithoutFindingNext = (lstrcmp(optReplaceStopsWithoutFindingNext, TEXT("yes")) == 0);
 		}
 		else if (!lstrcmp(nm, TEXT("MISC")))
 		{
@@ -5280,6 +5358,10 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 			const TCHAR* saveDlgExtFilterToAllTypes = element->Attribute(TEXT("saveDlgExtFilterToAllTypes"));
 			if (saveDlgExtFilterToAllTypes)
 				_nppGUI._setSaveDlgExtFiltToAllTypes = (lstrcmp(saveDlgExtFilterToAllTypes, TEXT("yes")) == 0);
+
+			const TCHAR * optMuteSounds = element->Attribute(TEXT("muteSounds"));
+			if (optMuteSounds)
+				_nppGUI._muteSounds = lstrcmp(optMuteSounds, TEXT("yes")) == 0;
 		}
 		else if (!lstrcmp(nm, TEXT("commandLineInterpreter")))
 		{
@@ -5290,6 +5372,27 @@ void NppParameters::feedGUIParameters(TiXmlNode *node)
 				if (cli && cli[0])
 					_nppGUI._commandLineInterpreter.assign(cli);
 			}
+		}
+		else if (!lstrcmp(nm, TEXT("DarkMode")))
+		{
+			auto parseYesNoBoolAttribute = [&element](const TCHAR* name, bool defaultValue = false)->bool {
+				const TCHAR* val = element->Attribute(name);
+				if (val)
+				{
+					if (!lstrcmp(val, TEXT("yes")))
+						return true;
+					else if (!lstrcmp(val, TEXT("no")))
+						return false;
+				}
+				return defaultValue;
+			};
+
+			_nppGUI._darkmode._isEnabled = parseYesNoBoolAttribute(TEXT("enable"));
+
+			int i;
+			const TCHAR* val = element->Attribute(TEXT("colorTone"), &i);
+			if (val)
+				_nppGUI._darkmode._colorTone = static_cast<NppDarkMode::ColorTone>(i);
 		}
 	}
 }
@@ -5502,6 +5605,27 @@ void NppParameters::feedScintillaParam(TiXmlNode *node)
 		else if (!lstrcmp(nm, TEXT("no")))
 			_svp._doSmoothFont = false;
 	}
+
+	nm = element->Attribute(TEXT("paddingLeft"), &val);
+	if (nm)
+	{
+		if (val >= 0 && val <= 30)
+			_svp._paddingLeft = static_cast<unsigned char>(val);
+	}
+
+	nm = element->Attribute(TEXT("paddingRight"), &val);
+	if (nm)
+	{
+		if (val >= 0 && val <= 30)
+			_svp._paddingRight = static_cast<unsigned char>(val);
+	}
+
+	nm = element->Attribute(TEXT("distractionFreeDivPart"), &val);
+	if (nm)
+	{
+		if (val >= 3 && val <= 9)
+			_svp._distractionFreeDivPart = static_cast<unsigned char>(val);
+	}
 }
 
 
@@ -5700,19 +5824,19 @@ bool NppParameters::writeScintillaParams()
 
 	const TCHAR *pViewName = TEXT("ScintillaPrimaryView");
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
 
 	TiXmlNode *configsRoot = nppRoot->FirstChildElement(TEXT("GUIConfigs"));
-	if (not configsRoot)
+	if (!configsRoot)
 	{
 		configsRoot = nppRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfigs")));
 	}
 
 	TiXmlNode *scintNode = getChildElementByAttribut(configsRoot, TEXT("GUIConfig"), TEXT("name"), pViewName);
-	if (not scintNode)
+	if (!scintNode)
 	{
 		scintNode = configsRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig")));
 		(scintNode->ToElement())->SetAttribute(TEXT("name"), pViewName);
@@ -5755,6 +5879,9 @@ bool NppParameters::writeScintillaParams()
 	(scintNode->ToElement())->SetAttribute(TEXT("eolShow"), _svp._eolShow?TEXT("show"):TEXT("hide"));
 	(scintNode->ToElement())->SetAttribute(TEXT("borderWidth"), _svp._borderWidth);
 	(scintNode->ToElement())->SetAttribute(TEXT("smoothFont"), _svp._doSmoothFont ? TEXT("yes") : TEXT("no"));
+	(scintNode->ToElement())->SetAttribute(TEXT("paddingLeft"), _svp._paddingLeft);
+	(scintNode->ToElement())->SetAttribute(TEXT("paddingRight"), _svp._paddingRight);
+	(scintNode->ToElement())->SetAttribute(TEXT("distractionFreeDivPart"), _svp._distractionFreeDivPart);
 	return true;
 }
 
@@ -5811,7 +5938,17 @@ void NppParameters::createXmlTreeFromGUIParams()
 		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("ToolBar"));
 		const TCHAR *pStr = (_nppGUI._toolbarShow) ? TEXT("yes") : TEXT("no");
 		GUIConfigElement->SetAttribute(TEXT("visible"), pStr);
-		pStr = _nppGUI._toolBarStatus == TB_SMALL ? TEXT("small") : (_nppGUI._toolBarStatus == TB_STANDARD ? TEXT("standard") : TEXT("large"));
+
+		if (_nppGUI._toolBarStatus == TB_SMALL)
+			pStr = TEXT("small");
+		else if (_nppGUI._toolBarStatus == TB_LARGE)
+			pStr = TEXT("large");
+		else if (_nppGUI._toolBarStatus == TB_SMALL2)
+			pStr = TEXT("small2");
+		else if (_nppGUI._toolBarStatus == TB_LARGE2)
+			pStr = TEXT("large2");
+		else //if (_nppGUI._toolBarStatus == TB_STANDARD)
+			pStr = TEXT("standard");
 		GUIConfigElement->InsertEndChild(TiXmlText(pStr));
 	}
 
@@ -5910,12 +6047,14 @@ void NppParameters::createXmlTreeFromGUIParams()
 		GUIConfigElement->SetAttribute(TEXT("bottom"), _nppGUI._findWindowPos.bottom);
 	}
 
-	// <GUIConfig name="FinderConfig" wrappedLines="no" />
+	// <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no"/>
 	{
 		TiXmlElement* GUIConfigElement = (newGUIRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig"))))->ToElement();
 		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("FinderConfig"));
 		const TCHAR* pStr = _nppGUI._finderLinesAreCurrentlyWrapped ? TEXT("yes") : TEXT("no");
 		GUIConfigElement->SetAttribute(TEXT("wrappedLines"), pStr);
+		pStr = _nppGUI._finderPurgeBeforeEverySearch ? TEXT("yes") : TEXT("no");
+		GUIConfigElement->SetAttribute(TEXT("purgeBeforeEverySearch"), pStr);
 	}
 
 	// <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20161022">no</GUIConfig>
@@ -5999,6 +6138,11 @@ void NppParameters::createXmlTreeFromGUIParams()
 	// <GUIConfig name = "DetectEncoding">yes< / GUIConfig>
 	{
 		insertGUIConfigBoolNode(newGUIRoot, TEXT("DetectEncoding"), _nppGUI._detectEncoding);
+	}
+	
+	// <GUIConfig name = "SaveAllConfirm">yes< / GUIConfig>
+	{
+		insertGUIConfigBoolNode(newGUIRoot, TEXT("SaveAllConfirm"), _nppGUI._saveAllConfirm);
 	}
 
 	// <GUIConfig name = "NewDocDefaultSettings" format = "0" encoding = "0" lang = "3" codepage = "-1" openAnsiAsUTF8 = "no" / >
@@ -6213,9 +6357,10 @@ void NppParameters::createXmlTreeFromGUIParams()
 		GUIConfigElement->SetAttribute(TEXT("docPeekOnTab"), _nppGUI._isDocPeekOnTab ? TEXT("yes") : TEXT("no"));
 		GUIConfigElement->SetAttribute(TEXT("docPeekOnMap"), _nppGUI._isDocPeekOnMap ? TEXT("yes") : TEXT("no"));
 		GUIConfigElement->SetAttribute(TEXT("saveDlgExtFilterToAllTypes"), _nppGUI._setSaveDlgExtFiltToAllTypes ? TEXT("yes") : TEXT("no"));
+		GUIConfigElement->SetAttribute(TEXT("muteSounds"), _nppGUI._muteSounds ? TEXT("yes") : TEXT("no"));
 	}
 
-	// <GUIConfig name="Searching" "monospacedFontFindDlg"="no" stopFillingFindField="no" findDlgAlwaysVisible="no" confirmReplaceOpenDocs="yes" confirmMacroReplaceOpenDocs="yes" confirmReplaceInFiles="yes" confirmMacroReplaceInFiles="yes" />
+	// <GUIConfig name="Searching" "monospacedFontFindDlg"="no" stopFillingFindField="no" findDlgAlwaysVisible="no" confirmReplaceOpenDocs="yes" confirmMacroReplaceOpenDocs="yes" confirmReplaceInFiles="yes" confirmMacroReplaceInFiles="yes" replaceStopsWithoutFindingNext="no"/>
 	{
 		TiXmlElement* GUIConfigElement = (newGUIRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig"))))->ToElement();
 		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("Searching"));
@@ -6224,6 +6369,7 @@ void NppParameters::createXmlTreeFromGUIParams()
 		GUIConfigElement->SetAttribute(TEXT("stopFillingFindField"), _nppGUI._stopFillingFindField ? TEXT("yes") : TEXT("no"));
 		GUIConfigElement->SetAttribute(TEXT("findDlgAlwaysVisible"), _nppGUI._findDlgAlwaysVisible ? TEXT("yes") : TEXT("no"));
 		GUIConfigElement->SetAttribute(TEXT("confirmReplaceInAllOpenDocs"), _nppGUI._confirmReplaceInAllOpenDocs ? TEXT("yes") : TEXT("no"));
+		GUIConfigElement->SetAttribute(TEXT("replaceStopsWithoutFindingNext"), _nppGUI._replaceStopsWithoutFindingNext ? TEXT("yes") : TEXT("no"));
 	}
 
 	// <GUIConfig name="searchEngine" searchEngineChoice="2" searchEngineCustom="" />
@@ -6232,6 +6378,14 @@ void NppParameters::createXmlTreeFromGUIParams()
 		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("searchEngine"));
 		GUIConfigElement->SetAttribute(TEXT("searchEngineChoice"), _nppGUI._searchEngineChoice);
 		GUIConfigElement->SetAttribute(TEXT("searchEngineCustom"), _nppGUI._searchEngineCustom);
+	}
+
+	// <GUIConfig name="MarkAll" matchCase="no" wholeWordOnly="yes" </GUIConfig>
+	{
+		TiXmlElement* GUIConfigElement = (newGUIRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig"))))->ToElement();
+		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("MarkAll"));
+		GUIConfigElement->SetAttribute(TEXT("matchCase"), _nppGUI._markAllCaseSensitive ? TEXT("yes") : TEXT("no"));
+		GUIConfigElement->SetAttribute(TEXT("wholeWordOnly"), _nppGUI._markAllWordOnly ? TEXT("yes") : TEXT("no"));
 	}
 
 	// <GUIConfig name="SmartHighLight" matchCase="no" wholeWordOnly="yes" useFindSettings="no" onAnotherView="no">yes</GUIConfig>
@@ -6249,6 +6403,20 @@ void NppParameters::createXmlTreeFromGUIParams()
 		TiXmlElement *GUIConfigElement = (newGUIRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig"))))->ToElement();
 		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("commandLineInterpreter"));
 		GUIConfigElement->InsertEndChild(TiXmlText(_nppGUI._commandLineInterpreter.c_str()));
+	}
+
+	// <GUIConfig name="DarkMode" enable="no" colorTone="0" />
+	{
+		TiXmlElement* GUIConfigElement = (newGUIRoot->InsertEndChild(TiXmlElement(TEXT("GUIConfig"))))->ToElement();
+		GUIConfigElement->SetAttribute(TEXT("name"), TEXT("DarkMode"));
+
+		auto setYesNoBoolAttribute = [&GUIConfigElement](const TCHAR* name, bool value) {
+			const TCHAR* pStr = value ? TEXT("yes") : TEXT("no");
+			GUIConfigElement->SetAttribute(name, pStr);
+		};
+
+		setYesNoBoolAttribute(TEXT("enable"), _nppGUI._darkmode._isEnabled);
+		GUIConfigElement->SetAttribute(TEXT("colorTone"), _nppGUI._darkmode._colorTone);
 	}
 
 	// <GUIConfig name="ScintillaPrimaryView" lineNumberMargin="show" bookMarkMargin="show" indentGuideLine="show" folderMarkStyle="box" lineWrapMethod="aligned" currentLineHilitingShow="show" scrollBeyondLastLine="no" rightClickKeepsSelection="no" disableAdvancedScrolling="no" wrapSymbolShow="hide" Wrap="no" borderEdge="yes" edge="no" edgeNbColumn="80" zoom="0" zoom2="0" whiteSpaceShow="hide" eolShow="hide" borderWidth="2" smoothFont="no" />
@@ -6269,10 +6437,10 @@ void NppParameters::createXmlTreeFromGUIParams()
 
 bool NppParameters::writeFindHistory()
 {
-	if (not _pXmlUserDoc) return false;
+	if (!_pXmlUserDoc) return false;
 
 	TiXmlNode *nppRoot = _pXmlUserDoc->FirstChild(TEXT("NotepadPlus"));
-	if (not nppRoot)
+	if (!nppRoot)
 	{
 		nppRoot = _pXmlUserDoc->InsertEndChild(TiXmlElement(TEXT("NotepadPlus")));
 	}
@@ -6297,6 +6465,9 @@ bool NppParameters::writeFindHistory()
 
 	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifRecuisive"),			_findHistory._isFifRecuisive?TEXT("yes"):TEXT("no"));
 	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifInHiddenFolder"),		_findHistory._isFifInHiddenFolder?TEXT("yes"):TEXT("no"));
+	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifProjectPanel1"),	    	_findHistory._isFifProjectPanel_1?TEXT("yes"):TEXT("no"));
+	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifProjectPanel2"),	      	_findHistory._isFifProjectPanel_2?TEXT("yes"):TEXT("no"));
+	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifProjectPanel3"),	       	_findHistory._isFifProjectPanel_3?TEXT("yes"):TEXT("no"));
 	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifFilterFollowsDoc"),	_findHistory._isFilterFollowDoc?TEXT("yes"):TEXT("no"));
 	(findHistoryRoot->ToElement())->SetAttribute(TEXT("fifFolderFollowsDoc"),	_findHistory._isFolderFollowDoc?TEXT("yes"):TEXT("no"));
 
@@ -6697,8 +6868,8 @@ int NppParameters::langTypeToCommandID(LangType lt) const
 		case L_MMIXAL :
 			id = IDM_LANG_MMIXAL; break;
 
-		case L_NIMROD :
-			id = IDM_LANG_NIMROD; break;
+		case L_NIM :
+			id = IDM_LANG_NIM; break;
 
 		case L_NNCRONTAB :
 			id = IDM_LANG_NNCRONTAB; break;
@@ -6778,7 +6949,7 @@ generic_string NppParameters::getWinVerBitStr() const
 	}
 }
 
-void NppParameters::writeStyles(LexerStylerArray & lexersStylers, StyleArray & globalStylers)
+generic_string NppParameters::writeStyles(LexerStylerArray & lexersStylers, StyleArray & globalStylers)
 {
 	TiXmlNode *lexersRoot = (_pXmlUserStylerDoc->FirstChild(TEXT("NotepadPlus")))->FirstChildElement(TEXT("LexerStyles"));
 	for (TiXmlNode *childNode = lexersRoot->FirstChildElement(TEXT("LexerType"));
@@ -6872,7 +7043,17 @@ void NppParameters::writeStyles(LexerStylerArray & lexersStylers, StyleArray & g
 		}
 	}
 
-	_pXmlUserStylerDoc->SaveFile();
+	bool isSaved = _pXmlUserStylerDoc->SaveFile();
+	if (!isSaved)
+	{
+		auto savePath = _themeSwitcher.getSavePathFrom(_pXmlUserStylerDoc->Value());
+		if (!savePath.empty())
+		{
+			_pXmlUserStylerDoc->SaveFile(savePath.c_str());
+			return savePath;
+		}
+	}
+	return TEXT("");
 }
 
 
